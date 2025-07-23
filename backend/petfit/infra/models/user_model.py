@@ -9,7 +9,7 @@ import uuid
 from petfit.infra.database import Base
 from petfit.infra.models.recipe_user_model import user_favorite_recipes_table # <--- MUDANÇA AQUI!
 from typing import List
-from petfit.infra.models.recipe_model import RecipeModel
+
 
 
 

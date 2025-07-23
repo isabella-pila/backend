@@ -68,7 +68,7 @@ jobs:
           context: ./backend
           file: ./Dockerfile.prod 
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/petfit-api:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/petfit2:latest
 
 
       - name: Trigger Render Deploy

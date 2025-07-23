@@ -1,10 +1,12 @@
+# petfit/api/schemas/recipe_schema.py
+
 from pydantic import BaseModel, Field
-from typing import List, Optional, Annotated
+from typing import List, Optional
 
 class RecipeInput(BaseModel):
     title: str = Field(..., min_length=3, max_length=100, description="Título da receita")
-    ingredients: Annotated[List[str], Field(min_items=1, description="Lista de ingredientes")]
-    instructions: Annotated[List[str], Field(min_items=1, description="Lista de instruções")]
+    ingredients: List[str] = Field(..., min_items=1, description="Lista de ingredientes")
+    instructions: List[str] = Field(..., min_items=1, description="Lista de instruções")
     is_public: bool = Field(True, description="Indica se a receita é pública")
 
 class RecipeOutput(BaseModel):

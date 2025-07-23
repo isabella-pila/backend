@@ -1,7 +1,6 @@
 # Nome claro que descreve o que o workflow faz
 name: CI/CD - Build, Push to Docker Hub and Deploy to Render
-
-# Gatilho: Roda em push para a branch 'main'
+#oi
 on:
   push:
     branches:

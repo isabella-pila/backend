@@ -1,0 +1,29 @@
+# Core
+python-dotenv>=1.1.0
+
+# Testes
+pytest>=8.4.0
+pytest-cov>=6.2.1
+black==24.4.2
+mypy
+ruff
+
+
+pytest-asyncio>=0.22.0
+httpx
+asgi-lifespan
+
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.0
+fastapi[all]>=0.115.12
+uvicorn>=0.34.3
+pydantic>=2.11.7
+
+sqlalchemy>=2.0
+asyncpg>=0.30
+alembic>=1.16
+psycopg2-binary>=2.9.6
+
+types-passlib
+types-python-jose

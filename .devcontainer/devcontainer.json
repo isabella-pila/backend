@@ -1,0 +1,25 @@
+{
+  "name": "Petfit API Dev",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "petfit",
+  "workspaceFolder": "/home/devuser/app",
+  "remoteUser": "devuser",
+  "forwardPorts": [
+    8080
+  ],
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "python.defaultInterpreterPath": "/usr/local/bin/python"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/backend,target=/home/devuser/app,type=bind"
+  ],
+  "postCreateCommand": "pip install -r requirements.txt",
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-vscode.makefile-tools",
+    "ms-azuretools.vscode-docker",
+    "humao.rest-client"
+  ]
+}

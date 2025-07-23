@@ -1,0 +1,75 @@
+# Nome claro que descreve o que o workflow faz
+name: CI/CD - Build, Push to Docker Hub and Deploy to Render
+
+# Gatilho: Roda em push para a branch 'main'
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports: [5432:5432]
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgresql+asyncpg://test_user:test_password@localhost:5432/test_db
+      SECRET_KEY: "your_secret"
+      ALGORITHM: "HS256"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      
+  # --- JOB 2: Fazer o build, push e deploy ---
+  deploy:
+    # Este job só roda se o job 'test' for bem-sucedido
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./Dockerfile.prod 
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/petfit-api:latest
+
+
+      - name: Trigger Render Deploy
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}

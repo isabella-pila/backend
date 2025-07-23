@@ -15,4 +15,3 @@ class Recipe:
         self.ingredients = ingredients
         self.instructions = instructions
         self.is_public = is_public
-

@@ -12,7 +12,6 @@ from typing import List
 
 
 
-
 class UserModel(Base):
     __tablename__ = "users"
 
